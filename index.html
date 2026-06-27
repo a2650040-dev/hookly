@@ -6,7 +6,7 @@
   <title>Hookly — Content Ideas That Actually Hook</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0E0E0E;
@@ -21,9 +21,8 @@
       --text-muted: #8A8580;
       --text-dim: #4A4540;
       --success: #4ADE80;
-      --font-display: 'Syne', sans-serif;
-      --font-body: 'Inter', sans-serif;
-	  --font-size: 14px;
+      --font-display: 'DM Sans', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
       --radius: 10px;
       --radius-sm: 6px;
       --radius-lg: 14px;
@@ -106,9 +105,20 @@
     .hero p {
       color: var(--text-muted);
       font-size: 16px;
-      max-width: 400px;
+      max-width: 360px;
       margin: 0 auto;
       line-height: 1.6;
+    }
+
+    .btn-footnote {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .ai-badge {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
     }
 
     /* Form card */
@@ -404,15 +414,15 @@
 
 <main>
   <div class="hero">
-    <h1>Generate viral content ideas with a real <span class="hook-word">Hook</span></h1>
-    <p>Comes up with ideas and writes posts. Instantly. AI-powered</p>
+    <h1>Generate viral content ideas<br>with a real <span class="hook-word">Hook</span></h1>
+    <p>Comes up with ideas and writes posts. Instantly.</p>
   </div>
 
   <div class="form-card">
     <div class="form-grid">
       <div class="field full">
         <label>Topic / Niche</label>
-        <input type="text" id="topicInput" placeholder="e.g. personal finance, sci-fi, strange facts, AI tools, true crime, football…">
+        <input type="text" id="topicInput" placeholder="e.g. e.g. personal finance, sci-fi, strange facts, AI tools, true crime, football…">
       </div>
 
       <div class="field">
@@ -468,6 +478,10 @@
       <span class="spinner" id="spinner"></span>
       <span id="btnText">✦ Generate 5 Ideas</span>
     </button>
+
+    <div class="btn-footnote">
+      <span class="ai-badge">⚡ AI-powered · ready in seconds</span>
+    </div>
 
     <div class="error-msg" id="errorMsg"></div>
 
@@ -572,23 +586,39 @@ async function generateIdeas() {
   setLoading(true);
   document.getElementById('resultsSection').style.display = 'none';
 
-  const systemPrompt = `You are a viral content strategist for ${platform}. Generate 5 unique, specific, creative content ideas. Each idea must have a hook that grabs attention in the first 3 seconds. Be specific, not generic. Output ONLY valid JSON, no markdown, no explanation.`;
+  const systemPrompt = `You are a top-tier content strategist who has studied what actually goes viral on ${platform}. You think like a creative director, not a content manager. Your ideas are surprising, specific, and make people stop scrolling because they feel personally seen or genuinely curious. You never produce generic, safe, or obvious ideas. Output ONLY valid JSON array, starting with [ and ending with ]. No markdown, no explanation, no preamble.`;
 
-  const userPrompt = `Topic: ${topic}
-Platform: ${platform}
-Content type: ${contentType}
+  const userPrompt = `Generate 5 ${contentType} content ideas for ${platform}.
+Topic: ${topic}
 Tone: ${tone}
 Language: ${language}
-Year: 2025-2026
+Audience context: 2025-2026, short attention spans, oversaturated feeds
 
-Return JSON array of 5 objects:
+WHAT MAKES A GREAT HOOK (study these):
+BAD: "5 tips to improve your finances" — generic, heard before, no tension
+BAD: "Why you should invest early" — obvious, no surprise
+GOOD: "I tracked every purchase for 90 days. The result embarrassed me."
+GOOD: "The financial advice your parents gave you is optimized for their decade, not yours."
+GOOD: "Most people save money wrong — not the amount, the timing."
+A great hook creates a knowledge gap, challenges an assumption, or triggers recognition.
+
+WHAT MAKES A GREAT ANGLE:
+- Unexpected framing: take the contrarian or counterintuitive position
+- Specific detail over vague generality ("saved $340 in one week" not "saved money")
+- One clear enemy: a myth, a bad habit, a common mistake to expose
+- A story arc or tension: something was broken, now it's fixed
+
+Return JSON array of exactly 5 objects:
 [{"title":"...","hook":"...","angle":"..."}]
 
-Rules:
-- title: catchy, specific headline
-- hook: first sentence that stops the scroll (max 15 words)
-- angle: unique approach, 2-3 sentences, actionable
-- All text in ${language}`;
+Fields:
+- title: the content title — specific, not clever for its own sake (max 12 words)
+- hook: the first sentence — creates curiosity or tension, max 18 words
+- angle: the unique approach — 2-3 sentences, name the specific mechanism or insight
+- All text in ${language}
+- 5 ideas must use 5 DIFFERENT hook strategies: curiosity gap / contrarian take / personal confession / surprising statistic / direct challenge to reader
+
+Respond with ONLY the JSON array. Start with [ and end with ].`;
 
   try {
     const raw = await callAPI(systemPrompt, userPrompt);
@@ -642,21 +672,43 @@ async function expandPost(id) {
 
   const { platform, language, tone } = getFormData();
 
-  const systemPrompt = `You are an expert ${platform} content writer. Write a complete, ready-to-post piece of content. Be direct, engaging, and write in ${language}. No meta-commentary, just the post itself.`;
+  const platformGuide = {
+    'Telegram': 'Telegram channel post. 300-600 chars. Dense, intelligent, author voice. No fluff. Readers come for insight, not entertainment. Short paragraphs, no bullet overload. Can end with a sharp opinion.',
+    'X (Twitter)': 'Single tweet or thread opener. Max 280 chars for single, or 3-5 punchy tweets if thread. Every sentence earns its place. Provocative but grounded. No hashtag spam. Hook = first tweet.',
+    'Instagram': 'Instagram caption. Hook in line 1 (before "more"). 150-300 words. Warm, personal, story-driven. 3-5 relevant hashtags at the end. CTA as a question.',
+    'LinkedIn': 'LinkedIn post. 150-400 words. Personal story → insight → lesson. First line must work as a standalone teaser. No "I am excited to announce". Thoughtful, not promotional.',
+    'YouTube': 'YouTube video script opening (first 60 seconds). Hook → problem → payoff promise. Conversational, direct to camera feel. No "Hey guys welcome back".',
+    'Facebook': 'Facebook post. 100-250 words. Warm, community feel. Story-led. Ends with a question to drive comments.',
+    'TikTok': 'TikTok script. First 3 seconds = hook spoken aloud. 30-45 second total. Each sentence is a new beat. Fast, punchy, no wasted words. POV or tutorial format.'
+  };
+  const guide = platformGuide[platform] || `${platform} post. Platform-appropriate length. Engaging, direct.`;
 
-  const userPrompt = `Write a full ${platform} post based on this idea:
+  const systemPrompt = `You are a top ${platform} creator known for content that feels genuinely human — not AI-generated, not corporate, not generic. Your writing has a distinct voice: specific, direct, occasionally surprising. You write in ${language}. No meta-commentary. Output only the post itself, ready to publish.`;
+
+  const userPrompt = `Write a ${platform} post based on this idea.
+
+Idea:
 Title: ${idea.title}
 Hook: ${idea.hook}
 Angle: ${idea.angle}
-Tone: ${tone}
-Language: ${language}
 
-Requirements:
-- Start with the hook (grab attention immediately)
-- Natural, ${tone.toLowerCase()} tone
-- Platform-appropriate length for ${platform}
-- End with a call-to-action or question
-- Include relevant emojis if appropriate for ${platform}`;
+Voice & tone: ${tone}
+Language: ${language}
+Format guide: ${guide}
+
+QUALITY RULES — your post must pass ALL of these:
+✗ Never start with "In today's world", "Have you ever", "Let's dive in", "Are you tired of"
+✗ No AI-sounding filler: "It's important to note", "This is crucial", "In conclusion"
+✗ No vague generalities — every claim needs a specific detail or example
+✗ Don't explain the hook — just open with it, cold
+✗ No listicle if the format doesn't call for it
+
+✓ Open with the hook, unannounced
+✓ One core idea, explored with depth or story — not a list of 7 things
+✓ A moment of surprise, tension, or recognition for the reader
+✓ End with a CTA or question that feels like a natural conversation, not a template
+
+Write the post now. Output only the post text, nothing else.`;
 
   try {
     const post = await callAPI(systemPrompt, userPrompt, 1500);
