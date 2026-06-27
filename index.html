@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hookly — Content Ideas That Actually Hook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0E0E0E;
+      --surface: #1A1A1A;
+      --surface2: #242424;
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(245,166,35,0.3);
+      --amber: #F5A623;
+      --amber-dim: rgba(245,166,35,0.12);
+      --amber-soft: #FDE68A;
+      --text: #F5F0E8;
+      --text-muted: #8A8580;
+      --text-dim: #4A4540;
+      --success: #4ADE80;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Inter', sans-serif;
+	  --font-size: 14px;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --radius-lg: 14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .logo span { color: var(--amber); }
+
+
+
+    /* Main */
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .hero h1 .hook-word {
+      position: relative;
+      display: inline-block;
+      color: var(--amber);
+    }
+    .hero h1 .hook-word::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      height: 3px;
+      background: var(--amber);
+      border-radius: 2px;
+      width: 0;
+      animation: underline-grow 0.7s 0.4s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    @keyframes underline-grow {
+      to { width: 100%; }
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Form card */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus { border-color: var(--amber); }
+    input[type="text"]::placeholder { color: var(--text-dim); }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238A8580' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+    }
+    select option { background: var(--surface2); }
+
+    /* Tone chips */
+    .tone-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      transition: all 0.15s;
+    }
+    .chip:hover { border-color: var(--border-hover); color: var(--amber); }
+    .chip.active {
+      background: var(--amber-dim);
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    /* Generate button */
+    .btn-generate {
+      width: 100%;
+      background: var(--amber);
+      border: none;
+      border-radius: var(--radius);
+      color: #0E0E0E;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      padding: 14px;
+      margin-top: 6px;
+      transition: background 0.15s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-generate:hover { background: var(--amber-soft); }
+    .btn-generate:active { transform: scale(0.99); }
+    .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: #0E0E0E;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .spinner.active { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-msg {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: var(--radius-sm);
+      color: #FCA5A5;
+      font-size: 13px;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+
+    /* Results */
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .results-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .count-badge {
+      background: var(--amber-dim);
+      border: 1px solid rgba(245,166,35,0.2);
+      border-radius: 20px;
+      color: var(--amber);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+    }
+
+    /* Idea card */
+    .idea-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+    .idea-card:hover { border-color: var(--border-hover); }
+
+    .idea-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+    .idea-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .idea-hook {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .idea-angle {
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .idea-actions { display: flex; gap: 8px; }
+    .btn-sm {
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 12px;
+      transition: all 0.15s;
+      border: 1px solid transparent;
+    }
+    .btn-accent {
+      background: var(--amber);
+      color: #0E0E0E;
+      border-color: var(--amber);
+    }
+    .btn-accent:hover { background: var(--amber-soft); }
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text-muted);
+    }
+    .btn-outline:hover { border-color: var(--border-hover); color: var(--amber); }
+
+    /* Full post section */
+    .full-post-section {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: none;
+    }
+    .full-post-section.visible { display: block; }
+    .full-post-text {
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      margin-bottom: 10px;
+    }
+    .post-spinner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-dim);
+      padding: 8px 0;
+    }
+    .post-spinner .spinner { display: block; }
+
+    /* Saved section */
+    .saved-section { margin-top: 32px; }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 24px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 18px;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      z-index: 999;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 560px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: 1; }
+      header { padding: 14px 16px; }
+      main { padding: 0 16px 60px; }
+      .hero { padding: 40px 0 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Hook<span>ly</span></div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Generate viral content ideas with a real <span class="hook-word">Hook</span></h1>
+    <p>Comes up with ideas and writes posts. Instantly. AI-powered</p>
+  </div>
+
+  <div class="form-card">
+    <div class="form-grid">
+      <div class="field full">
+        <label>Topic / Niche</label>
+        <input type="text" id="topicInput" placeholder="e.g. personal finance, sci-fi, strange facts, AI tools, true crime, football…">
+      </div>
+
+      <div class="field">
+        <label>Platform</label>
+        <select id="platformSelect">
+          <option value="Telegram">Telegram</option>
+          <option value="X (Twitter)">X (Twitter)</option>
+          <option value="Instagram">Instagram</option>
+          <option value="LinkedIn">LinkedIn</option>
+          <option value="YouTube">YouTube</option>
+          <option value="Facebook">Facebook</option>
+          <option value="TikTok">TikTok</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Content Type</label>
+        <select id="contentTypeSelect">
+          <option value="Educational">Educational</option>
+          <option value="Entertaining">Entertaining</option>
+          <option value="Storytelling">Storytelling</option>
+          <option value="Controversial">Controversial</option>
+          <option value="List / Tips">List / Tips</option>
+          <option value="Behind the scenes">Behind the scenes</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Language</label>
+        <select id="languageSelect">
+          <option value="English">English</option>
+          <option value="Russian">Russian</option>
+          <option value="Spanish">Spanish</option>
+          <option value="German">German</option>
+          <option value="French">French</option>
+          <option value="Portuguese">Portuguese</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Tone</label>
+        <div class="tone-chips">
+          <button class="chip active" data-tone="Conversational">Conversational</button>
+          <button class="chip" data-tone="Inspiring">Inspiring</button>
+          <button class="chip" data-tone="Humorous">Humorous</button>
+          <button class="chip" data-tone="Serious">Serious</button>
+          <button class="chip" data-tone="Bold">Bold</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-generate" id="generateBtn" onclick="generateIdeas()">
+      <span class="spinner" id="spinner"></span>
+      <span id="btnText">✦ Generate 5 Ideas</span>
+    </button>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+  </div>
+
+  <div id="resultsSection" style="display:none;">
+    <div class="results-header">
+      <span class="results-title">Ideas</span>
+      <span class="count-badge" id="countBadge">5 ideas</span>
+    </div>
+    <div class="ideas-list" id="ideasList"></div>
+  </div>
+
+  <div class="saved-section" id="savedSection" style="display:none;">
+    <div class="divider"></div>
+    <div class="results-header">
+      <span class="results-title">Saved</span>
+      <button class="btn-sm btn-outline" onclick="clearSaved()" style="font-size:11px;">Clear all</button>
+    </div>
+    <div class="ideas-list" id="savedList"></div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_BASE = '/api/proxy';
+const ideasStore = {};
+const MODEL = 'deepseek';
+
+// Tone chips
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+  });
+});
+
+function getFormData() {
+  return {
+    topic: document.getElementById('topicInput').value.trim(),
+    platform: document.getElementById('platformSelect').value,
+    contentType: document.getElementById('contentTypeSelect').value,
+    language: document.getElementById('languageSelect').value,
+    tone: document.querySelector('.chip.active')?.dataset.tone || 'Conversational',
+  };
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.classList.add('visible');
+}
+function hideError() {
+  document.getElementById('errorMsg').classList.remove('visible');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function setLoading(on) {
+  const btn = document.getElementById('generateBtn');
+  const spinner = document.getElementById('spinner');
+  const btnText = document.getElementById('btnText');
+  btn.disabled = on;
+  spinner.classList.toggle('active', on);
+  btnText.textContent = on ? 'Generating…' : '✦ Generate 5 Ideas';
+}
+
+async function callAPI(systemPrompt, userPrompt, maxTokens = 3000) {
+  const response = await fetch(API_BASE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: maxTokens,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }],
+    }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || `HTTP ${response.status}`);
+  }
+
+  // OpenAI-compatible format
+  const text = data.choices?.[0]?.message?.content;
+  if (!text) throw new Error('Unexpected response format');
+  return text;
+}
+
+async function generateIdeas() {
+  hideError();
+  const { topic, platform, contentType, language, tone } = getFormData();
+  if (!topic) { showError('Enter a topic or niche first.'); return; }
+
+  setLoading(true);
+  document.getElementById('resultsSection').style.display = 'none';
+
+  const systemPrompt = `You are a viral content strategist for ${platform}. Generate 5 unique, specific, creative content ideas. Each idea must have a hook that grabs attention in the first 3 seconds. Be specific, not generic. Output ONLY valid JSON, no markdown, no explanation.`;
+
+  const userPrompt = `Topic: ${topic}
+Platform: ${platform}
+Content type: ${contentType}
+Tone: ${tone}
+Language: ${language}
+Year: 2025-2026
+
+Return JSON array of 5 objects:
+[{"title":"...","hook":"...","angle":"..."}]
+
+Rules:
+- title: catchy, specific headline
+- hook: first sentence that stops the scroll (max 15 words)
+- angle: unique approach, 2-3 sentences, actionable
+- All text in ${language}`;
+
+  try {
+    const raw = await callAPI(systemPrompt, userPrompt);
+    if (!raw) { setLoading(false); return; }
+
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const ideas = JSON.parse(clean);
+
+    ideas.forEach((idea, i) => { ideasStore[`idea-${i}`] = idea; });
+
+    const list = document.getElementById('ideasList');
+    list.innerHTML = ideas.map((idea, i) => renderIdeaCard(idea, `idea-${i}`, false)).join('');
+
+    document.getElementById('resultsSection').style.display = 'block';
+    document.getElementById('countBadge').textContent = `${ideas.length} ideas`;
+    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (e) {
+    showError('Error: ' + e.message);
+  } finally {
+    setLoading(false);
+  }
+}
+
+function renderIdeaCard(idea, id, isSaved) {
+  return `
+  <div class="idea-card" id="card-${id}">
+    <div class="idea-label">Idea ${id.split('-')[1] ? parseInt(id.split('-')[1]) + 1 : ''}</div>
+    <div class="idea-title">${escHtml(idea.title)}</div>
+    <div class="idea-hook">"${escHtml(idea.hook)}"</div>
+    <div class="idea-angle">${escHtml(idea.angle)}</div>
+    <div class="idea-actions">
+      <button class="btn-sm btn-accent" onclick="expandPost('${id}')">✦ Write Full Post</button>
+      <button class="btn-sm btn-outline" onclick="copyIdea('${id}')">Copy</button>
+      ${!isSaved ? `<button class="btn-sm btn-outline" onclick="saveIdea('${id}')">Save</button>` : ''}
+    </div>
+    <div class="full-post-section" id="post-${id}"></div>
+  </div>`;
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function expandPost(id) {
+  const idea = ideasStore[id];
+  if (!idea) { showToast('Idea not found'); return; }
+
+  const section = document.getElementById(`post-${id}`);
+  section.classList.add('visible');
+  section.innerHTML = `<div class="post-spinner"><div class="spinner active"></div> Writing post…</div>`;
+
+  const { platform, language, tone } = getFormData();
+
+  const systemPrompt = `You are an expert ${platform} content writer. Write a complete, ready-to-post piece of content. Be direct, engaging, and write in ${language}. No meta-commentary, just the post itself.`;
+
+  const userPrompt = `Write a full ${platform} post based on this idea:
+Title: ${idea.title}
+Hook: ${idea.hook}
+Angle: ${idea.angle}
+Tone: ${tone}
+Language: ${language}
+
+Requirements:
+- Start with the hook (grab attention immediately)
+- Natural, ${tone.toLowerCase()} tone
+- Platform-appropriate length for ${platform}
+- End with a call-to-action or question
+- Include relevant emojis if appropriate for ${platform}`;
+
+  try {
+    const post = await callAPI(systemPrompt, userPrompt, 1500);
+    if (!post) { section.innerHTML = ''; return; }
+    ideasStore[id].fullPost = post;
+    section.innerHTML = `
+      <div class="full-post-text">${escHtml(post)}</div>
+      <button class="btn-sm btn-outline" onclick="copyPost('${id}')">Copy post</button>
+    `;
+  } catch (e) {
+    section.innerHTML = `<div style="color:#FCA5A5;font-size:13px;">Error: ${escHtml(e.message)}</div>`;
+  }
+}
+
+function copyIdea(id) {
+  const idea = ideasStore[id];
+  if (!idea) return;
+  const text = `${idea.title}\n\n${idea.hook}\n\n${idea.angle}`;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied!'));
+}
+
+function copyPost(id) {
+  const post = ideasStore[id]?.fullPost;
+  if (!post) return;
+  navigator.clipboard.writeText(post).then(() => showToast('Post copied!'));
+}
+
+// Saved ideas
+const savedIdeas = JSON.parse(localStorage.getItem('hookly_saved') || '[]');
+
+function saveIdea(id) {
+  const idea = ideasStore[id];
+  if (!idea) return;
+  const key = `saved-${Date.now()}`;
+  ideasStore[key] = { ...idea };
+  savedIdeas.push({ key, idea });
+  localStorage.setItem('hookly_saved', JSON.stringify(savedIdeas));
+  renderSaved();
+  showToast('Saved!');
+}
+
+function renderSaved() {
+  if (!savedIdeas.length) {
+    document.getElementById('savedSection').style.display = 'none';
+    return;
+  }
+  document.getElementById('savedSection').style.display = 'block';
+  document.getElementById('savedList').innerHTML = savedIdeas.map(({ key, idea }) => {
+    ideasStore[key] = idea;
+    return renderIdeaCard(idea, key, true);
+  }).join('');
+}
+
+function clearSaved() {
+  savedIdeas.length = 0;
+  localStorage.removeItem('hookly_saved');
+  renderSaved();
+  showToast('Cleared');
+}
+
+renderSaved();
+</script>
+</body>
+</html>
